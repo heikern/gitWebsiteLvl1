@@ -13,7 +13,6 @@ def login():
 	hidden = loginForm().hidden_tag()
 	submit = loginForm().submit
 	if loginForm().validate_on_submit():
-		print"testing"
 		return redirect("/")
 	return render_template("login.html",
 							lastName = lastName,
