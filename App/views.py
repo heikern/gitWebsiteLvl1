@@ -24,6 +24,13 @@ def login():
 	hidden = loginForm().hidden_tag()
 	submit = loginForm().submit
 	if loginForm().validate_on_submit():
+		userName = lastName.data
+		names = g.db.cursor().execute('SELECT name FROM users').fetchall()
+		for name in names:
+			print name[0]
+			print userName
+			if name[0] == userName:
+				return "Welcome %s" % userName
 		return redirect("/viewDatabase")
 	return render_template("login.html",
 							lastName = lastName,
