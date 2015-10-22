@@ -1,6 +1,17 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, g
 from App import application
 from loginForm import loginForm
+import sqlite3
+
+@application.before_request
+def before_request():
+	g.db = sqlite3.connect('db1.db')
+
+@application.teardown_request
+def teardown_request(exception):
+	if hasattr(g,'db'):
+		g.db.close()
+
 
 @application.route('/')
 def home():
@@ -13,9 +24,15 @@ def login():
 	hidden = loginForm().hidden_tag()
 	submit = loginForm().submit
 	if loginForm().validate_on_submit():
-		return redirect("/")
+		return redirect("/viewDatabase")
 	return render_template("login.html",
 							lastName = lastName,
 							memberStatus = memberStatus,
 							hidden = hidden,
 							submit = submit)
+
+@application.route('/viewDatabase')
+def viewDatabase():
+	users = g.db.cursor().execute('SELECT * FROM users').fetchall()
+	return render_template('viewDatabase.html',
+							users = users)
