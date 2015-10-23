@@ -32,7 +32,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/heikernleong/Documents/Python/gitWebsiteLvl1/flask"
+set -gx VIRTUAL_ENV "/home/heikern/Documents/Python/Learning_flask/gitWebsiteLvl1/flask"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul>{{messages[0]}}</ul>
+		{% endif %}
+	{% endwith %}
+	<p>welcome {{userName}} you are logged in</p>
+	<a href="/loggedOut">log out</a>
+{% endblock %}

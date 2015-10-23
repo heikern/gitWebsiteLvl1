@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, g
+from flask import Flask, render_template, redirect, g, flash, session
 from App import application
 from loginForm import loginForm
 import sqlite3
@@ -30,8 +30,14 @@ def login():
 			print name[0]
 			print userName
 			if name[0] == userName:
-				return "Welcome %s" % userName
+				session['logged_in'] = True
+				flash('welcome to the club!')
+				return render_template("loggedIn.html",
+					userName = name[0])
+		flash('ehh walao you enter wrong password')
 		return redirect("/viewDatabase")
+	else:
+		flash('please write something in the form')
 	return render_template("login.html",
 							lastName = lastName,
 							memberStatus = memberStatus,
@@ -43,3 +49,8 @@ def viewDatabase():
 	users = g.db.cursor().execute('SELECT * FROM users').fetchall()
 	return render_template('viewDatabase.html',
 							users = users)
+
+@application.route('/loggedOut')
+def loggedOut():
+	session.pop("logged_in", None)
+	return render_template('loggedOut.html')

@@ -1,12 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<ul>{{messages[0]}}</ul>
+		{% endif %}
+	{% endwith %}
 	<form action="" method="post" name="LoginForm">
 		{{hidden}}
 		<p>Time to tell me who are you</p>
 		<p>{{lastName}}</p>
 		<p>And are you one of us</p>
 		<p>{{memberStatus}}</p>
+		<input type="password", placeholder="password", value="{{request.form.password}}">
 		<p>{{submit}}</p>
 	</form>
 {% endblock %}
